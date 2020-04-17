@@ -5,24 +5,27 @@ import {inject as service} from '@ember/service';
 
 export default Controller.extend({
     config: service(),
+    settings: service(),
 
+    // Settings we can change
     oneColumn: false,
-    color: null,
+    brandColor: null,
+    newColor: null,
 
     guid: alias('model'),
 
-    previewValue: computed('oneColumn', 'color', function () {
+    previewValue: computed('oneColumn', 'newColor', function () {
         let string = '';
 
         if (this.oneColumn) {
             string += 'l:1-';
         }
 
-        if (this.color) {
-            string += `c:${this.color}-`;
+        if (this.newColor) {
+            string += `c:${this.newColor}-`;
         }
 
-        return string.replace(/-$/, '');
+        return encodeURIComponent(string.replace(/-$/, ''));
     }),
 
     siteUrl: computed('config.blogUrl', 'previewValue', function () {
@@ -34,6 +37,16 @@ export default Controller.extend({
     actions: {
         toggleLayout() {
             this.set('oneColumn', !this.oneColumn);
+        },
+
+        changeBrandColor() {
+            let newColor = this.brandColor;
+            if (newColor[0] !== '#') {
+                newColor = `#${newColor}`;
+            }
+            if (newColor.length === 7) {
+                this.set('newColor', newColor);
+            }
         }
     }
 });

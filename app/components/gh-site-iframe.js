@@ -7,7 +7,6 @@ export default Component.extend({
     tagName: '',
 
     didReceiveAttrs() {
-        console.log('received attrs');
         // reset the src attribute each time the guid changes - allows for
         // a click on the navigation item to reset back to the homepage
         if (this.guid !== this._lastGuid) {
@@ -17,5 +16,17 @@ export default Component.extend({
             }
         }
         this._lastGuid = this.guid;
+    },
+
+    actions: {
+        onLoading() {
+            let iframe = document.querySelector('#site-frame');
+            console.log('on loading', this.siteUrl, iframe.src);
+            if (iframe && iframe.src !== this.siteUrl) {
+                console.log('setting site url');
+                this.set('siteUrl', iframe.src);
+            }
+        }
     }
+
 });
