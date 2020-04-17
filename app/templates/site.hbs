@@ -1,8 +1,18 @@
  <section class="gh-dirty-theme-options">
-    <section class="view-actions">
-        <button class="gh-btn gh-btn-green" {{action "toggleLayout"}}><span>Toggle Layout</span></button> [{{this.previewValue}}]
-    </section>
+    <div class="input-color" >
+        <GhTextInput
+            @name="brand-color"
+            @placeholder="abcdef"
+            @autocorrect="off"
+            @maxlength="6"
+            @focus-out={{action "changeBrandColor"}}
+            @value={{brandColor}}
+            data-test-brand-color-input={{true}}
+        />
+        <div class="color-box" style={{this.backgroundStyle}}></div>
+    </div>
+    <button class="gh-btn gh-btn-green" {{action "toggleLayout"}}><span>Toggle Layout</span></button>
 </section>
-<section class="gh-canvas">
+<section class="gh-canvas gh-dirty-site-preview">
     <GhSiteIframe @guid={{this.guid}} @siteUrl={{this.siteUrl}}></GhSiteIframe>
 </section>
