@@ -6,9 +6,24 @@ import {inject as service} from '@ember/service';
 export default Controller.extend({
     config: service(),
 
-    previewValue: 1,
+    oneColumn: false,
+    color: null,
 
     guid: alias('model'),
+
+    previewValue: computed('oneColumn', 'color', function () {
+        let string = '';
+
+        if (this.oneColumn) {
+            string += 'l:1-';
+        }
+
+        if (this.color) {
+            string += `c:${this.color}-`;
+        }
+
+        return string.replace(/-$/, '');
+    }),
 
     siteUrl: computed('config.blogUrl', 'previewValue', function () {
         let url = this.get('config.blogUrl');
@@ -17,9 +32,8 @@ export default Controller.extend({
     }),
 
     actions: {
-        changeSomething() {
-            let newValue = Math.floor(Math.random() * 10 + 1);
-            this.set('previewValue', newValue);
+        toggleLayout() {
+            this.set('oneColumn', !this.oneColumn);
         }
     }
 });
