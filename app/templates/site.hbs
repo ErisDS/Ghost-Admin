@@ -1,1 +1,8 @@
-<GhSiteIframe @guid={{this.guid}}></GhSiteIframe>
+ <section class="gh-dirty-theme-options">
+    <section class="view-actions">
+        <button class="gh-btn gh-btn-green" {{action "changeSomething"}}><span>Change things</span></button> [{{this.previewValue}}]
+    </section>
+</section>
+<section class="gh-canvas">
+    <GhSiteIframe @guid={{this.guid}} @siteUrl={{this.siteUrl}}></GhSiteIframe>
+</section>

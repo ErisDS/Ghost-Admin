@@ -12,6 +12,7 @@ export default Component.extend({
     }),
 
     didReceiveAttrs() {
+        console.log('received attrs');
         // reset the src attribute each time the guid changes - allows for
         // a click on the navigation item to reset back to the homepage
         if ((this.guid !== this._lastGuid) || (this.src !== this._lastSrc)) {
