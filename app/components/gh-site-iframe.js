@@ -10,6 +10,15 @@ export default Component.extend({
     srcUrl: computed('src', function () {
         return this.src || `${this.config.get('blogUrl')}/`;
     }),
+    init() {
+        this._super(...arguments);
+
+        // Listen to messages sent from the content iframe
+        var receiveMessage = function receiveMessage(e){
+            console.log('got a message', e);
+        };
+        window.addEventListener('message', receiveMessage, false);
+    },
 
     didReceiveAttrs() {
         // reset the src attribute each time the guid changes - allows for
@@ -27,7 +36,7 @@ export default Component.extend({
     actions: {
         onLoading() {
             let iframe = document.querySelector('#site-frame');
-            console.log('on loading', this.siteUrl, iframe.src);
+            console.log('on loading', iframe.src);
             if (iframe && iframe.src !== this.siteUrl) {
                 console.log('setting site url');
                 this.set('siteUrl', iframe.src);
